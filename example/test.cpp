@@ -20,9 +20,9 @@ public:
 private:
   void onConnection(const TcpConnectionPtr &conn) {
     if (conn->connected()) {
-      LOG_INFO("Connection success : %s", conn->peerAddress().toIpPort().c_str());
+      LOG_INFO("Connection success : %s\n", conn->peerAddress().toIpPort().c_str());
     } else {
-      LOG_INFO("Connection failed : %s", conn->peerAddress().toIpPort().c_str());
+      LOG_INFO("Connection failed : %s\n", conn->peerAddress().toIpPort().c_str());
     }
   }
 
