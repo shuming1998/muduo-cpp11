@@ -53,7 +53,7 @@ public:
   // 设置感兴趣事件中真正发生的事件
   // channel 无法监听fd发生的事件，是 poller
   // 在监听，监听到事件后，通过这个公有接口设置 channel
-  int set_revents(int revt) { revents_ = revt; }
+  void set_revents(int revt) { revents_ = revt; }
 
   // 设置 fd 相应的事件状态
   // 对读事件感兴趣，并通过update()接口调用 poller 中的
