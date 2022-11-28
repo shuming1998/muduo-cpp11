@@ -7,7 +7,8 @@ InetAddress::InetAddress(uint16_t port, std::string ip) {
   bzero(&addr_, sizeof addr_);
   addr_.sin_family = AF_INET;
   addr_.sin_port = htons(port);
-  addr_.sin_addr.s_addr = inet_addr(ip.c_str());
+  // addr_.sin_addr.s_addr = inet_addr(ip.c_str());
+  addr_.sin_addr.s_addr = htonl(INADDR_ANY);
 }
 
 std::string InetAddress::toIp() const {

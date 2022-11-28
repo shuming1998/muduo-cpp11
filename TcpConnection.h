@@ -40,20 +40,20 @@ public:
 
   // 设置回调
   void setConnectionCallback(const ConnectionCallback &cb) {
-    connectionCallback_ = cb;
+    connectionCallback_ = std::move(cb);
   }
-  void setMessageCallback(const MessageCallback &cb) { messageCallback_ = cb; }
+  void setMessageCallback(const MessageCallback &cb) { messageCallback_ = std::move(cb); }
 
   void setWriteCompleteCallback(const WriteCompleteCallback &cb) {
-    writeCompleteCallback_ = cb;
+    writeCompleteCallback_ = std::move(cb);
   }
 
   void setHighWaterMarkCallback(const HighWaterMarkCallback &cb,
                                 size_t highWaterMark) {
-    highWaterMarkCallback_ = cb;
+    highWaterMarkCallback_ = std::move(cb);
     highWaterMark_ = highWaterMark;
   }
-  void setCloseCallback(const CloseCallback &cb) { closeCallback_ = cb; }
+  void setCloseCallback(const CloseCallback &cb) { closeCallback_ = std::move(cb); }
 
   // 连接建立
   void connectEstablished();

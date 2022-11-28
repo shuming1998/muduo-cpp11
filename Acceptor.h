@@ -23,7 +23,7 @@ public:
 
   // 当有新连接时，用来让 TcpServer 设置要执行的回调函数，在 TcpServer 对象的构造函数中调用
   void setNewConnectionCallback(const NewConnectionCallback &cb) {
-    newConnectionCallback_ = cb;
+    newConnectionCallback_ = std::move(cb);
   }
 
   bool listenning() const { return listenning_; }

@@ -88,7 +88,7 @@ void EPollPoller::removeChannel(Channel *channel) {
 // 到 EventLoop 的 ChannelList 实参中，具体看 EventLoop 中的代码逻辑
 Timestamp EPollPoller::poll(int timeoutMs, ChannelList *activeChannels) {
   // 用 LOG_DEBUG 输出日志更为合理，能降低高并发时对 poll 的性能影响
-  LOG_INFO("[%s:%s:%d]\nfd total count: %d\n", __FILE__, __FUNCTION__, __LINE__,
+  LOG_DEBUG("[%s:%s:%d]\nfd total count: %d\n", __FILE__, __FUNCTION__, __LINE__,
            static_cast<int>(channels_.size()));
   // epoll_wait 第二个参数应该是 events 数组的首地址，为了方便扩容，这里用
   // vector 存储 event vector 的底层也是数组，events_.begin()
@@ -101,7 +101,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelList *activeChannels) {
   // 获取当前时间
   Timestamp now(Timestamp::now());
   if (numEvents > 0) {
-    LOG_INFO("[%s:%s:%d]\n%d events happened", __FILE__, __FUNCTION__, __LINE__,
+    LOG_DEBUG("[%s:%s:%d]\n%d events happened\n", __FILE__, __FUNCTION__, __LINE__,
              numEvents);
     fillActiveChannels(numEvents, activeChannels);
     if (numEvents == events_.size()) {
