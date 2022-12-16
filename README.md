@@ -15,7 +15,7 @@ $ sudo ./autoBuild.sh
 
 在头文件中 #include <mymuduo/TcpServer.h>
 
-使用日志：#include <mymuduo/Logger.h>	(方法类似pringtf)
+使用日志：#include <mymuduo/Logger.h>	(方法类似printf)
 
 ```c++
 LOG_INFO("myMuduo: %d", int);
