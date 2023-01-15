@@ -11,7 +11,6 @@ class EventLoopThread;
 
 /*
  * 事件循环线程池
- *
 */
 
 class EventLoopThreadPool : noncopyable {

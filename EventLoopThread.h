@@ -14,6 +14,7 @@ public:
 
   EventLoopThread(const ThreadInitCallback &cb = ThreadInitCallback(),
                   const std::string &name = std::string());
+
   ~EventLoopThread();
 
   EventLoop *startLoop();

@@ -31,8 +31,8 @@ public:
   static Poller *newDefaultPoller(EventLoop *loop);
 
 protected:
-  using ChannelMap = std::unordered_map<int, Channel *>; // 保存 sockfd <---> Channel
-  ChannelMap channels_; // poller 检测到某个 fd 上有注册的事件发生时，就通过这个 map 找到 channel，从而找到 channel 中记录的回调函数
+  using ChannelMap = std::unordered_map<int, Channel *>; // 保存 sockfd <---> 包含该 fd的 Channel
+  ChannelMap channels_;   // poller 检测到某个 fd 上有注册的事件发生时，就通过这个 map 找到 channel，从而找到 channel 中记录的回调函数
 
 private:
   EventLoop *ownerLoop_;  // 记录 poller 所属的事件循环，用于和 channel 通信

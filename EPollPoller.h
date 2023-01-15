@@ -40,6 +40,6 @@ private:
   using EventList = std::vector<epoll_event>;
 
   static const int kInitEventListSize = 16; // epoll_event 数组的初始大小
-  int epollfd_; // epoll 对象的文件描述符，通过 epoll_creat 创建
-  EventList events_; // epoll_wait 的第二个参数，代表发生事件的 fd
+  int epollfd_;                             // epoll 对象的文件描述符，通过 epoll_creat 创建
+  EventList events_;                        // epoll_wait 的第二个参数，代表发生事件的 fd
 };

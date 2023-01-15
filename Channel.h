@@ -104,8 +104,8 @@ private:
 
   EventLoop *loop_; // channel 所属的事件循环，用于和 poller 通信
   const int fd_;    // 要往 poller 上注册的文件描述符，fd Poller 监听的对象
-  int events_;      // 注册 fd 感兴趣的事件
-  int revents_;     // poller 返回的具体发生的事件
+  int events_;      // 注册 fd 感兴趣的事件(读事件、写事件等)
+  int revents_;     // poller 通知的具体发生的事件
   int index_;       // used by Poller
 
   /*
@@ -126,7 +126,7 @@ private:
   // 因为 channel 能够获知 fd 最终发生的具体的事件 revents
   // 所以它负责根据 revents 具体发生事件的类型，来选择调用具体事件的回调操作
   // 这些回调函数是由用户实现的，只不过通过 TcpConnection 接口间接传给
-  // channel，由 channel 在相应事件发生时调用
+  // channel，由 channel 在相应事件 revents_ 发生时调用
   ReadEventCallback readCallback_;
   EventCallback writeCallback_;
   EventCallback closeCallback_;
