@@ -3,8 +3,7 @@
 
 #include <memory>
 
-EventLoopThreadPool::EventLoopThreadPool(EventLoop *baseLoop,
-                                         const std::string &nameArg)
+EventLoopThreadPool::EventLoopThreadPool(EventLoop *baseLoop, const std::string &nameArg)
     : baseLoop_(baseLoop)
     , name_(nameArg)
     , started_(false)
@@ -21,7 +20,7 @@ void EventLoopThreadPool::start(const ThreadInitCallback &cb) {
   // 如果用户设置了多线程模式，就执行这段逻辑，不执行下一段
   for (int i = 0; i < numThreads_; ++i) {
     char buf[name_.size() + 32];
-    snprintf(buf, sizeof buf, "%s%d", name_.c_str(), i);
+    snprintf(buf, sizeof(buf), "%s%d", name_.c_str(), i);
     EventLoopThread *t = new EventLoopThread(cb, buf);
     threads_.push_back(std::unique_ptr<EventLoopThread>(t));
     loops_.push_back(t->startLoop()); // 创建线程，绑定一个新的EventLoop，并返回它的地址

@@ -33,6 +33,7 @@ void Channel::update() {
 // 在channel 所属的 EventLoop 的 ChannelList 中，把当前的 channel 删除掉
 void Channel::remove() { loop_->removeChannel(this); }
 
+// handleEvent 在 subloop 中的 epoll 返回后被调用
 void Channel::handleEvent(Timestamp receiveTime) {
   // 弱回调：如果对象还活着，就调用它的成员函数，否则忽略之
   if (tied_) {

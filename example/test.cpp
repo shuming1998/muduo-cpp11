@@ -10,10 +10,12 @@ public:
       : server_(loop, addr, name)
       , loop_(loop) {
     server_.setConnectionCallback(std::bind(&EchoServer::onConnection, this, std::placeholders::_1));
-    server_.setMessageCallback(std::bind(&EchoServer::onMessage, this, std::placeholders::_1, std::placeholders::_2,
-        std::placeholders::_3));
+    server_.setMessageCallback(std::bind(&EchoServer::onMessage, this,
+                                         std::placeholders::_1,
+                                         std::placeholders::_2,
+                                         std::placeholders::_3));
     server_.setThreadNum(7);
-}
+  }
 
   void start() { server_.start(); }
 
@@ -42,6 +44,6 @@ int main(int argc, char *argv[]) {
   EchoServer server(&loop, addr, "EchoServer-01");
   // 开启子线程 loop，注册 wakeupfd
   server.start(); // listen loopthread listenfd => acceptChannel => mainLoop
-  loop.loop(); // 启动 mainLoop Poller
+  loop.loop();    // 启动 mainLoop
   return 0;
 }

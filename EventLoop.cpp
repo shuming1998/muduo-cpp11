@@ -94,7 +94,7 @@ void EventLoop::loop() {
 // 退出事件循环，两种可能：
 // 1.loop在自己的线程中调用 quit()
 // 2.在非 loop 线程中调用 quit()，比如在一个 subLoop 中调用了 mainLoop 的quit()
-// (在subLoop中结束mainLoop)
+// (在 subLoop 中结束 mainLoop)
 void EventLoop::quit() {
   quit_ = true;
   // 如果是第二种情况，必须先唤醒那个线程，使其能够跳出 while
@@ -136,8 +136,8 @@ void EventLoop::queueInLoop(Functor cb) {
 // 唤醒线程时被公有方法调用
 void EventLoop::handleRead() {
   uint64_t one = 1;
-  ssize_t n = read(wakeupFd_, &one, sizeof one);
-  if (n != sizeof one) {
+  ssize_t n = read(wakeupFd_, &one, sizeof(one));
+  if (n != sizeof(one)) {
     LOG_ERROR(
         "[%s:%s:%d]\nEventLoop::handleRead() reads %ld bytes instead of 8\n",
         __FILE__, __FUNCTION__, __LINE__, n);
@@ -150,10 +150,9 @@ void EventLoop::handleRead() {
 // loop()方法 中 poller 的 poll() 方法的阻塞中唤醒
 void EventLoop::wakeup() {
   uint64_t one = 1;
-  ssize_t n = write(wakeupFd_, &one, sizeof one);
-  if (n != sizeof one) {
-    LOG_ERROR(
-        "[%s:%s:%d]\nEventLoop::wakeup() writes %lu bytes instead of 8!\n",
+  ssize_t n = write(wakeupFd_, &one, sizeof(one));
+  if (n != sizeof(one)) {
+    LOG_ERROR("[%s:%s:%d]\nEventLoop::wakeup() writes %lu bytes instead of 8!\n",
         __FILE__, __FUNCTION__, __LINE__, n);
   }
 }

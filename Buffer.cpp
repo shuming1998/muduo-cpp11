@@ -21,11 +21,11 @@ ssize_t Buffer::readFd(int fd, int *saveErrno) {
   vec[0].iov_len = writable;
   // 第二块缓冲区
   vec[1].iov_base = extrabuf;
-  vec[1].iov_len = sizeof extrabuf;
+  vec[1].iov_len = sizeof(extrabuf);
 
   // 如果 buffer 空间足够，就不往 extrabuf 中读数据
   // 如果使用了 extrabuf，限制最多读128k - 1个字节
-  const int iovcnt = (writable < sizeof extrabuf) ? 2 : 1;
+  const int iovcnt = (writable < sizeof(extrabuf)) ? 2 : 1;
   // readv 系统调用可以将从 fd 上读到的数据写入到多块非连续缓冲区中
   const ssize_t n = ::readv(fd, vec, iovcnt);
   if (n < 0) {

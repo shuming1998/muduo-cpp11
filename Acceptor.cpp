@@ -19,20 +19,20 @@ static int createNonblocking() {
 
 // 有新用户连接时，最终相应的就是 TcpServer::newConnection 方法
 Acceptor::Acceptor(EventLoop *loop, const InetAddress &listenAddr, bool reuseport)
-    : loop_(loop) // 通过 loop 获取 poller 从而将新连接打包好的 channel 送给 poller
-    , acceptSocket_(createNonblocking()) // 创建 socket
-    , acceptChannel_(loop, acceptSocket_.fd()) // 封装 acceptChannel_，通过 loop 完成在 poller 上的监听
+    : loop_(loop) // 通过 loop 获取 poller 从而将新连接打包好的 channel 发送给 poller
+    , acceptSocket_(createNonblocking()) // 1. 创建非阻塞的 listenFd
+    , acceptChannel_(loop, acceptSocket_.fd()) // 封装 acceptChannel_，通过 mainLoop 完成在 poller 上的监听
     , listenning_(false) {
-  acceptSocket_.setReuseAddr(true);
+  acceptSocket_.setReuseAddr(true);      // 2. 设置 sockOption
   acceptSocket_.setReusePort(true);
-  acceptSocket_.bindAddress(listenAddr); // bind 刚才创建的 socket
+  acceptSocket_.bindAddress(listenAddr); // 3. bind 刚才创建的 socket
   //! Acceptor 只设置 readCallback，因为它只关心新用户连接事件，而在
   //! TcpConnection 中则关心已连接用户的所有事件
   // TcpServer::start() 会调用 Acceptor.listen()
   // 每当有新用户连接时，要执行一个回调函数 这个回调函数将 connfd 打包成 channel 并轮询唤醒一个 subloop，将 channel 交给它
   // 所以在还未发生事件时，先给打包好的 channel 注册回调函数，然后在 handleRead 中，会执行针对新连接的回调函数
   // newConnectionCallback_：通过 TcpServer 的回调函数设置的
-  acceptChannel_.setReadCallback(std::bind(&Acceptor::handleRead, this));
+  acceptChannel_.setReadCallback(std::bind(&Acceptor::handleRead, this)); // 4. 设置 readCallback
 }
 
 Acceptor::~Acceptor() {

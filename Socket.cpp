@@ -28,8 +28,8 @@ void Socket::listen() {
 // 通过返回值返回通信时用的 fd，并通过输出参数返回客户端通信地址和端口号
 int Socket::accept(InetAddress *peeraddr) {
   sockaddr_in addr;
-  socklen_t len = sizeof addr;
-  bzero(&addr, sizeof addr);
+  socklen_t len = sizeof(addr);
+  bzero(&addr, sizeof(addr));
   // 设置 connfd 为非阻塞，并且关闭父进程的文件描述符
   int connfd = ::accept4(sockfd_, (sockaddr *)&addr, &len, SOCK_NONBLOCK | SOCK_CLOEXEC);
   if (connfd >= 0) {
@@ -46,22 +46,22 @@ void Socket::shutdownWrite() {
 }
 void Socket::setTcpNoDelay(bool on) {
   int optval = on ? 1 : 0;
-  ::setsockopt(sockfd_, IPPROTO_TCP, TCP_NODELAY, &optval, sizeof optval);
+  ::setsockopt(sockfd_, IPPROTO_TCP, TCP_NODELAY, &optval, sizeof(optval));
 }
 
 void Socket::setReuseAddr(bool on) {
   int optval = on ? 1 : 0;
-  ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof optval);
+  ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
 }
 
 void Socket::setReusePort(bool on) {
   int optval = on ? 1 : 0;
-  ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof optval);
+  ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 }
 
 void Socket::setKeepAlive(bool on) {
   int optval = on ? 1 : 0;
-  ::setsockopt(sockfd_, SOL_SOCKET, SO_KEEPALIVE, &optval, sizeof optval);
+  ::setsockopt(sockfd_, SOL_SOCKET, SO_KEEPALIVE, &optval, sizeof(optval));
 }
 
 int Socket::getSocketError(int sockfd) {

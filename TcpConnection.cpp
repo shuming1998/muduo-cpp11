@@ -105,15 +105,13 @@ void TcpConnection::handleClose() {
   if (connectionCallback_) {
     connectionCallback_(connPtr);
   } else if (!connectionCallback_) {
-    LOG_ERROR("[%s:%s:%d]\nconnectionCallback_ did't set!\n", __FILE__,
-              __FUNCTION__, __LINE__);
+    LOG_ERROR("[%s:%s:%d]\nconnectionCallback_ did't set!\n", __FILE__, __FUNCTION__, __LINE__);
   }
   // 执行 TcpServer::removeConnection 回调函数
   if (closeCallback_) {
     closeCallback_(connPtr);
   } else if (!closeCallback_) {
-    LOG_ERROR("[%s:%s:%d]\ncloseCallback_ did't set!\n", __FILE__, __FUNCTION__,
-              __LINE__);
+    LOG_ERROR("[%s:%s:%d]\ncloseCallback_ did't set!\n", __FILE__, __FUNCTION__, __LINE__);
   }
 }
 
@@ -142,8 +140,7 @@ void TcpConnection::sendInLoop(const void *data, size_t len) {
   bool faultError = false;
   // 之前调用过该 connect 的 shutdown，不能再进行发送了
   if (state_ == kDisconnected) {
-    LOG_ERROR("[%s:%s:%d]\ndisconnected, give up writing!\n", __FILE__,
-              __FUNCTION__, __LINE__);
+    LOG_ERROR("[%s:%s:%d]\ndisconnected, give up writing!\n", __FILE__, __FUNCTION__, __LINE__);
     return;
   }
   // 最初设置的新连接的 channel_ 只对读事件感兴趣
@@ -156,15 +153,13 @@ void TcpConnection::sendInLoop(const void *data, size_t len) {
       remaining = len - nwrote;
       // 数据一次性全部发送完成了，所以无需给 channel 设置 epollout 事件
       if (0 == remaining && writeCompleteCallback_) {
-        loop_->queueInLoop(
-            std::bind(writeCompleteCallback_, shared_from_this()));
+        loop_->queueInLoop(std::bind(writeCompleteCallback_, shared_from_this()));
       }
       // 数据发送出错
     } else {
       nwrote = 0;
       if (errno != EWOULDBLOCK) {
-        LOG_ERROR("[%s:%s:%d]\nTcpConnection::sendInLoop\n", __FILE__,
-                  __FUNCTION__, __LINE__);
+        LOG_ERROR("[%s:%s:%d]\nTcpConnection::sendInLoop\n", __FILE__, __FUNCTION__, __LINE__);
         // 对方关闭了连接/自己关闭了发送连接 或者对端重启连接后还未连接
         if (errno == EPIPE || errno == ECONNRESET) {
           faultError = true;
@@ -199,7 +194,7 @@ void TcpConnection::connectEstablished() {
   // TcpConnection 会给到用户手里，channel_ 中的回调调用的是 TcpConnection
   // 的成员方法 初始化弱智能指针，后续用于防止 TcpConnection
   // 对象已经析构，而 channel 对象又调用了它的成员方法而产生未定义行为的情况
-  channel_->tie(shared_from_this());
+  channel_->tie(shared_from_this());  // 返回一个当前类的std::share_ptr
   channel_->enableReading(); // 向对应的 poller 注册 channel 的 EPOLLIN 读事件
   // 新连接建立，执行回调
   connectionCallback_(shared_from_this());
@@ -212,7 +207,7 @@ void TcpConnection::connectDestroyed() {
     channel_->disableAll(); // 把 channel_ 所有感兴趣的事件 delete
     connectionCallback_(shared_from_this());
   }
-  channel_->remove(); // 把 channel 从 poller 中删除调
+  channel_->remove();       // 把 channel 从 poller 中删除调
 }
 
 // 关闭连接

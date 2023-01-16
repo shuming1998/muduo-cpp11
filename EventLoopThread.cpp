@@ -39,7 +39,7 @@ EventLoop *EventLoopThread::startLoop() {
 
 // 这个方法是在单独的新线程中运行的,绑定到了 Thread 类中的 func_ 对象上，在 Thread::start() 方法中新创建的子线程中执行
 void EventLoopThread::threadFunc() {
-  // 创建一个独立的 EventLoop， 在这里实现了 one loop per thread
+  // 创建一个独立的 EventLoop，和新线程一一对应，实现 one loop per thread
   EventLoop loop;
 
   if (callback_) {

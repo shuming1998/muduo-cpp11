@@ -41,8 +41,7 @@ public:
   // Acceptor::handleRead 中会执行用户通过 TcpServer 绑定的自定义的回调函数
   void setReadCallback(ReadEventCallback cb) { readCallback_ = std::move(cb); }
 
-  // 防止当 channel 被手动 remove 掉之后(通过EventLoop)，channel
-  // 还在执行上面四个回调操作
+  // 防止当 channel 对应的 connection 被手动 remove 掉之后(通过 EventLoop)，channel 还在执行上面四个回调操作
   void tie(const std::shared_ptr<void> &);
 
   // 返回 fd
