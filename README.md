@@ -18,7 +18,7 @@
 
 主要组件：Event、Reactor、Demultiplex、EventHandler
 
-![image-20230218012019296](/home/cui/snap/typora/76/.config/Typora/typora-user-images/image-20230218012019296.png)
+![image-20230218012019296](https://github.com/shuming1998/muduo-cpp11/blob/main/image/reactor.png)
 
 
 
@@ -26,7 +26,7 @@
 
 
 
-![image-20230218012216496](/home/cui/snap/typora/76/.config/Typora/typora-user-images/image-20230218012216496.png)
+![image-20230218012216496](https://github.com/shuming1998/muduo-cpp11/blob/main/image/multiple_reactor.png)
 
 
 
