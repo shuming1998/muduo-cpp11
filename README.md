@@ -26,7 +26,7 @@
 
 
 
-![image-20230218012216496](https://github.com/shuming1998/muduo-cpp11/blob/main/image/multiple_reactor.png)
+![image-20230218012216496](https://github.com/shuming1998/muduo-cpp11/blob/main/image/multiple_reactors.png)
 
 
 
