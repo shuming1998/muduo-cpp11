@@ -14,15 +14,15 @@ cd `pwd`/build &&
 
 cd ..
 
-if [ ! -d /usr/include/mymuduo ]; then
-    mkdir /usr/include/mymuduo
+if [ ! -d /usr/include/cmuduo ]; then
+    mkdir /usr/include/cmuduo
 fi
 
-for header in `ls *.h`
+for header in `ls include/*.h`
 do
-    cp $header /usr/include/mymuduo
+    cp $header /usr/include/cmuduo
 done
 
-cp `pwd`/lib/libmyMuduo.so /usr/lib
+cp `pwd`/lib/libcmuduo.so /usr/lib
 
 ldconfig
