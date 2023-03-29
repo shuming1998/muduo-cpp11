@@ -11,7 +11,7 @@
 
 /*
  * 对应于 Reactor 组件
- * 时间循环类，主要包含两个大模块 Channel、poller(epoll的抽象)，掌控 poller 和 channel
+ * 事件循环类，主要包含两个大模块 Channel、poller(epoll的抽象)，掌控 poller 和 channel
  */
 
 class Channel;
