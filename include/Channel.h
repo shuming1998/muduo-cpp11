@@ -122,7 +122,7 @@ private:
   std::weak_ptr<void> tie_;
   bool tied_;
 
-  // 因为 channel 能够获知 fd 最终发生的具体的事件 revents
+  // 因为只有 channel 能够获知 fd 最终发生的具体的事件 revents
   // 所以它负责根据 revents 具体发生事件的类型，来选择调用具体事件的回调操作
   // 这些回调函数是由用户实现的，只不过通过 TcpConnection 接口间接传给
   // channel，由 channel 在相应事件 revents_ 发生时调用

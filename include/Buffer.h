@@ -101,10 +101,10 @@ private:
   // 扩容 buffer_
   void makeSpace(size_t len) {
     /*
+    |   prependableBytes()  |     |writableBytes()|
                   |读了一部分|↓
     kCheapPrepend |     reader    |     writer    |
     kCheapPrepend |              len              |
-
     读了一部分后，缓冲区已读出的部分就可以使用了(prependableBytes -
     kCheapPrepend) 如果已读数据长度 + kCheapPrepend + 可写长度 < 写入长度 +
     kCheapPrepend
